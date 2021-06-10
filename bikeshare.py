@@ -6,6 +6,7 @@ CITY_DATA = { 'chicago': 'chicago.csv',
               'new york city': 'new_york_city.csv',
               'washington': 'washington.csv' }
 
+
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -24,18 +25,18 @@ def get_filters():
             break
         else:
             print('invalid input, please try again')
-    
+
 
     # TO DO: get user input for month (all, january, february, ... , june)
     months=['all','january','february','march','april','may','june']
-    
+
     while(True):
         month=input('Please enter a month from (all, january, february, march, april, may, june): ')
         if month.lower() in months:
             break
         else:
             print('invalid input, please try again')
-           
+
 
     # TO DO: get user input for day of week (all, monday, tuesday, ... sunday)
     week_days=['all','monday', 'tuseday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
@@ -45,7 +46,7 @@ def get_filters():
             break
         else:
             print('invalid input, please try again')
-        
+
 
 
     print('-'*40)
@@ -64,13 +65,13 @@ def load_data(city, month, day):
         df - Pandas DataFrame containing city data filtered by month and day
     """
     df=pd.read_csv(CITY_DATA[city])
-    
+
     df['Start Time']=pd.to_datetime(df['Start Time'])
-    
+
     df['month']=df['Start Time'].dt.month
     df['day_of_week']=df['Start Time'].dt.weekday_name
     df['hour']=df['Start Time'].dt.hour
-    
+
     if month!='all':
         months=['january', 'february', 'march', 'april', 'may', 'june']
         month=months.index(month)+1
@@ -93,7 +94,7 @@ def time_stats(df):
 
     # TO DO: display the most common day of week
     popular_day_of_week=df['day_of_week'].value_counts().idxmax()
-    print('The most common day of week is: ', popular_day_of_week)  
+    print('The most common day of week is: ', popular_day_of_week)
 
     # TO DO: display the most common start hour
     popular_hour=df['hour'].value_counts().idxmax()
@@ -121,7 +122,7 @@ def station_stats(df):
     df['start end stations']='start station: '+df['Start Station']+", end station: "+df['End Station']
     popular_start_end_station=df['start end stations'].value_counts().idxmax()
     print('The most commonly used combination of start station is: ', popular_start_end_station)
-    
+
 
 
     print("\nThis took %s seconds." % (time.time() - start_time))
@@ -135,9 +136,9 @@ def trip_duration_stats(df):
     start_time = time.time()
 
     # TO DO: display total travel time
-    
+
     df['Total travle time']=pd.to_datetime(df['End Time'])-df['Start Time']
-    
+
     print("Total travle time: ")
     print(df['Total travle time'].sum())
 
@@ -158,8 +159,8 @@ def trip_duration_stats(df):
         view_data=input('Do you wish to continue? Enter yes or no: ').lower()
         while (view_data!='no' and view_data!='yes'):
             print('Invalid input, please try again')
-            view_data=input('Do you wish to continue? Enter yes or no: ').lower() 
-        
+            view_data=input('Do you wish to continue? Enter yes or no: ').lower()
+
 
 
 def user_stats(df):
